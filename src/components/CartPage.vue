@@ -1,5 +1,85 @@
 <script setup>
+import { ref, computed, onMounted, watch } from "vue";
 
+const cartData = ref([]);
+const loading = ref(true);
+
+// Reactive variables for name, phone, and validation
+const name = ref("");
+const phone = ref("");
+const orderSubmitted = ref(false);
+
+// Regular expressions for name and phone validation
+const nameRegex = /^[A-Za-z\s]+$/; // Only letters and spaces
+const phoneRegex = /^[0-9]{10}$/; // Exactly 10 digits
+
+// Compute if the form is valid
+const isFormValid = computed(() => {
+  return nameRegex.test(name.value) && phoneRegex.test(phone.value);
+});
+
+// Handle checkout submission
+const handleCheckout = () => {
+  if (isFormValid.value && cartData.value.length > 0) {
+    fetch("http://localhost:5000/order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name.value,
+        phone: phone.value,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        if (data) {
+          orderSubmitted.value = true;
+          cartData.value = [];
+          name.value = "";
+          phone.value = "";
+        }
+      });
+  }
+};
+
+const fetchCart = async () => {
+  loading.value = true;
+  try {
+    const response = await fetch("http://localhost:5000/cart");
+    if (response.ok) {
+      cartData.value = await response.json();
+    } else {
+      console.error("Failed to fetch data:", response.status);
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+onMounted(fetchCart);
+
+const totalPrice = computed(() => {
+  return cartData.value
+    ? cartData.value.reduce((sum, item) => sum + parseFloat(item.price) * parseFloat(item.space), 0)
+    : 0;
+});
+
+const removeItem = async (id) => {
+  fetch("http://localhost:5000/cart/" + id, {
+    method: "DELETE",
+  })
+    .then(() => {
+      fetchCart();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 </script>
 
 <template>
@@ -38,7 +118,8 @@
               </thead>
               <tbody>
                 <tr
-
+                  v-for="lesson in cartData"
+                  :key="lesson._id"
                   class="border-t border-gray-200 hover:bg-gray-100"
                 >
                   <td class="px-6 py-4">
@@ -48,13 +129,14 @@
                       class="object-cover w-16 h-16 rounded-full"
                     />
                   </td>
-                  <td class="px-6 py-4 text-gray-800"></td>
+                  <td class="px-6 py-4 text-gray-800">{{ lesson.subject }}</td>
                   <td class="text-center">
-                    
+                    {{ lesson.space }} 
                     
                   </td>
                   <td class="px-6 py-4">
                     <button
+                      @click="removeItem(lesson.lesson_id)"
                       class="text-red-500 hover:text-red-700"
                       aria-label="Remove from cart"
                     >
@@ -106,6 +188,7 @@
                     placeholder="Enter your name"
                   />
                   <span
+                    v-if="name && !nameRegex.test(name)"
                     class="text-sm text-red-500"
                     >Name must contain only letters and spaces</span
                   >
@@ -126,6 +209,7 @@
                     placeholder="Enter your phone number"
                   />
                   <span
+                    v-if="phone && !phoneRegex.test(phone)"
                     class="text-sm text-red-500"
                     >Phone number must be 10 digits</span
                   >
@@ -136,6 +220,8 @@
             <!-- Checkout Button -->
             <div>
               <button
+                @click="handleCheckout"
+                :disabled="!isFormValid"
                 class="w-full px-4 py-3 font-semibold text-white transition duration-300 bg-blue-600 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
               >
                 Checkout
@@ -144,6 +230,7 @@
 
             <!-- Confirmation Message -->
             <div
+              v-if="orderSubmitted"
               class="mt-4 font-semibold text-green-600"
             >
               <p>Your order has been submitted successfully!</p>
@@ -196,6 +283,7 @@
           <span
             class="absolute top-0 right-0 flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full"
           >
+            {{ cartData.length }}
           </span>
         </button></RouterLink
       >
