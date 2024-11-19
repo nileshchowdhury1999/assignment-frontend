@@ -8,7 +8,6 @@
 ### How to deploy
 ```
 npm run build
-git add dist -f
 npm run deploy
 
 ```
