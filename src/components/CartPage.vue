@@ -21,7 +21,7 @@ const isFormValid = computed(() => {
 // Handle checkout submission
 const handleCheckout = () => {
   if (isFormValid.value && cartData.value.length > 0) {
-    fetch("https://assignment-server-bgzv.onrender.com/order", {
+    fetch(import.meta.env.VITE_API_BACKEND_API + "/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const handleCheckout = () => {
 const fetchCart = async () => {
   loading.value = true;
   try {
-    const response = await fetch("https://assignment-server-bgzv.onrender.com/cart");
+    const response = await fetch(import.meta.env.VITE_API_BACKEND_API +"/cart");
     if (response.ok) {
       cartData.value = await response.json();
     } else {
@@ -70,7 +70,7 @@ const totalPrice = computed(() => {
 });
 
 const removeItem = async (id) => {
-  fetch("https://assignment-server-bgzv.onrender.com/cart/" + id, {
+  fetch(import.meta.env.VITE_API_BACKEND_API +"/cart/" + id, {
     method: "DELETE",
   })
     .then(() => {
@@ -264,7 +264,8 @@ const removeItem = async (id) => {
       <!-- shopping cart button -->
       <RouterLink to="/" class="nav-link"
         ><button
-          class="fixed flex items-center p-2 text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none top-20 right-4"
+          class="fixed flex items-center p-2 text-white bg-blue-600 rounded hover:bg-blue-700 disabled:bg-gray-400 focus:outline-none top-20 right-4"
+          :disabled="cartData.length < 1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -28,7 +28,7 @@ const loading = ref(true);
 
 onMounted(async () => {
     try {
-        const response = await fetch('https://assignment-server-bgzv.onrender.com/cart');
+        const response = await fetch(import.meta.env.VITE_API_BACKEND_API +'/cart');
         if (response.ok) {
             data.value = await response.json(); 
         } else {
