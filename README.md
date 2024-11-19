@@ -7,6 +7,6 @@
 ```
 npm run build
 git add dist -f
-pnpm run deploy
+npm run deploy
 
 ```
