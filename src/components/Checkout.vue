@@ -28,7 +28,7 @@ const loading = ref(true);
 
 onMounted(async () => {
     try {
-        const response = await fetch('http://localhost:5000/cart');
+        const response = await fetch('https://assignment-server-bgzv.onrender.com/cart');
         if (response.ok) {
             data.value = await response.json(); 
         } else {

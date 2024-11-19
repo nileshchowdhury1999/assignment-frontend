@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, watch } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 const cartData = ref([]);
 const loading = ref(true);
@@ -21,7 +21,7 @@ const isFormValid = computed(() => {
 // Handle checkout submission
 const handleCheckout = () => {
   if (isFormValid.value && cartData.value.length > 0) {
-    fetch("http://localhost:5000/order", {
+    fetch("https://assignment-server-bgzv.onrender.com/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const handleCheckout = () => {
 const fetchCart = async () => {
   loading.value = true;
   try {
-    const response = await fetch("http://localhost:5000/cart");
+    const response = await fetch("https://assignment-server-bgzv.onrender.com/cart");
     if (response.ok) {
       cartData.value = await response.json();
     } else {
@@ -70,7 +70,7 @@ const totalPrice = computed(() => {
 });
 
 const removeItem = async (id) => {
-  fetch("http://localhost:5000/cart/" + id, {
+  fetch("https://assignment-server-bgzv.onrender.com/cart/" + id, {
     method: "DELETE",
   })
     .then(() => {

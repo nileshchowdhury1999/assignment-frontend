@@ -14,7 +14,7 @@ const searchTerm = ref(""); // New search term ref
 const fetchLessons = async () => {
   loading.value = true;
   try {
-    const response = await fetch("http://localhost:5000/lessons");
+    const response = await fetch("https://assignment-server-bgzv.onrender.com/lessons");
     if (response.ok) {
       data.value = await response.json();
       filteredData.value = [...data.value];
@@ -31,7 +31,7 @@ const fetchLessons = async () => {
 // Fetch cart data from the backend
 const fetchCart = async () => {
   try {
-    const response = await fetch("http://localhost:5000/cart");
+    const response = await fetch("https://assignment-server-bgzv.onrender.com/cart");
     if (response.ok) {
       cartItemCount.value = (await response.json()).length;
     } else {
@@ -47,7 +47,7 @@ const handleAddToCart = async (lesson) => {
   const lesson_id = lesson._id;
 
   try {
-    const response = await fetch("http://localhost:5000/cart", {
+    const response = await fetch("https://assignment-server-bgzv.onrender.com/cart", {
       method: "POST",
       body: JSON.stringify({
         ...lesson,
