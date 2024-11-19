@@ -316,7 +316,8 @@ onMounted(() => {
       <!-- shopping cart button -->
       <RouterLink to="/cart-page" class="nav-link"
         ><button
-          class="fixed flex items-center p-2 text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none top-20 right-4"
+          class="fixed flex items-center p-2 text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none disabled:bg-gray-400 top-20 right-4"
+          :disabled="cartItemCount < 1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
