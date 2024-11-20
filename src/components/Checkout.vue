@@ -127,7 +127,7 @@ console.log(totalPrice);
             </div>
             <div class="col-span-2 pt-3">
               <div class="flex items-center space-x-2 text-sm justify-between">
-                <span class="text-gray-400">1 × ${{carts.course.price}}</span>
+                <span class="text-gray-400">1 × £{{carts.course.price}}</span>
                 <span class="text-pink-400 font-semibold inline-block">
                   ${{ carts.course.price}}
                 </span>
@@ -139,7 +139,7 @@ console.log(totalPrice);
         <div class="px-8 border-b">
           <div class="flex justify-between py-4 text-gray-600">
             <span>Subtotal</span>
-            <span class="font-semibold text-pink-500">${{556}}</span>
+            <span class="font-semibold text-pink-500">£{{556}}</span>
           </div>
           <div class="flex justify-between py-4 text-gray-600">
             <span>Shipping</span>
@@ -148,7 +148,7 @@ console.log(totalPrice);
         </div>
         <div class="font-semibold text-xl px-8 flex justify-between py-8 text-gray-600">
           <span>Total</span>
-          <span>${{totalPrice}}</span>
+          <span>£{{totalPrice}}</span>
         </div>
   </div>
   </div>

@@ -286,7 +286,7 @@ onMounted(() => {
               Location: <span class="font-semibold">{{ course.location }}</span>
             </p>
             <p class="mb-2 text-sm text-gray-600">
-              Price: <span class="font-semibold">${{ course.price }}</span>
+              Price: <span class="font-semibold">£{{ course.price }}</span>
             </p>
             <p class="mb-4 text-sm text-gray-600">
               Spaces Left:
