@@ -246,7 +246,7 @@ const removeItem = async (id) => {
           <div class="px-8 border-b">
             <div class="flex justify-between py-4 text-gray-600">
               <span>Subtotal</span>
-              <span class="font-semibold text-pink-500">${{ totalPrice }}</span>
+              <span class="font-semibold text-pink-500"> £{{ totalPrice }}</span>
             </div>
             <div class="flex justify-between py-4 text-gray-600">
               <span>Shipping</span>
@@ -257,7 +257,7 @@ const removeItem = async (id) => {
             class="flex justify-between px-8 py-8 text-xl font-semibold text-gray-600"
           >
             <span>Total</span>
-            <span>${{ totalPrice }}</span>
+            <span>£{{ totalPrice }}</span>
           </div>
         </div>
       </div>

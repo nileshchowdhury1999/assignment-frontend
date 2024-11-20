@@ -129,7 +129,7 @@ console.log(totalPrice);
               <div class="flex items-center space-x-2 text-sm justify-between">
                 <span class="text-gray-400">1 × £{{carts.course.price}}</span>
                 <span class="text-pink-400 font-semibold inline-block">
-                  ${{ carts.course.price}}
+                  £{{ carts.course.price}}
                 </span>
               </div>
             </div>
