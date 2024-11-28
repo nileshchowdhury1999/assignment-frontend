@@ -248,10 +248,6 @@ const removeItem = async (id) => {
               <span>Subtotal</span>
               <span class="font-semibold text-pink-500"> £{{ totalPrice }}</span>
             </div>
-            <div class="flex justify-between py-4 text-gray-600">
-              <span>Shipping</span>
-              <span class="font-semibold text-pink-500">Free</span>
-            </div>
           </div>
           <div
             class="flex justify-between px-8 py-8 text-xl font-semibold text-gray-600"
